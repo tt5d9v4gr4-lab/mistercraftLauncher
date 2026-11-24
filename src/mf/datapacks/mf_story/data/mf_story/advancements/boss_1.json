@@ -1,0 +1,40 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:prismarine_shard"
+    },
+    "title": {
+      "text": "Хозяин глубин"
+    },
+    "description": {
+      "text": "Победи древнего стража (элдер-гардиана)."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "k": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "minecraft:elder_guardian"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 300,
+    "loot": [
+      "mf_story:reward_hard"
+    ]
+  },
+  "parent": "mf_story:hunter_3"
+}

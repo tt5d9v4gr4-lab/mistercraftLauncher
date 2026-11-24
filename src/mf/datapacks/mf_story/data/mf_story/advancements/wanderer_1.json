@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:emerald"
+    },
+    "title": {
+      "text": "Первая сделка"
+    },
+    "description": {
+      "text": "Поторгуй с жителем в ближайшем поселении."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "t": {
+      "trigger": "minecraft:villager_trade"
+    }
+  },
+  "rewards": {
+    "experience": 30,
+    "loot": [
+      "mf_story:reward_easy"
+    ]
+  },
+  "parent": "mf_story:root"
+}

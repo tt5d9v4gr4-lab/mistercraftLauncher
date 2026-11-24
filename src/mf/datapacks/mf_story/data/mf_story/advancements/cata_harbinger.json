@@ -1,0 +1,46 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:iron_block"
+    },
+    "title": {
+      "text": "Предвестник"
+    },
+    "description": {
+      "text": "Победи Предвестника."
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "k": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "cataclysm:the_harbinger"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 500,
+    "loot": [
+      "mf_story:reward_boss"
+    ]
+  },
+  "parent": "mf_story:cata_remnant",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "cataclysm"
+    }
+  ]
+}

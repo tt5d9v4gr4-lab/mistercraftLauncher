@@ -1,0 +1,97 @@
+{
+  "id": "medieval-fantasy",
+  "name": "MisterCraft: Medieval Fantasy",
+  "version": "0.2.0",
+  "mc": "1.20.1",
+  "loader": "forge",
+  "note": "Кандидаты. Каждый мод при установке проверяется на Modrinth именно для Minecraft 1.20.1 + Forge (зависимости ставятся автоматически); если версии нет, пробуются alternatives, затем мод пропускается и попадает в отчёт. Записи с disabled:true не ставятся (конфликт/дубль/не проверено) — причина в поле reason.",
+  "mods": [
+    { "slug": "embeddium", "title": "Embeddium", "category": "Графика и производительность", "required": true },
+    { "slug": "oculus", "title": "Oculus (шейдеры)", "category": "Графика и производительность", "required": true },
+    { "slug": "ferrite-core", "title": "FerriteCore", "category": "Графика и производительность" },
+    { "slug": "modernfix", "title": "ModernFix", "category": "Графика и производительность" },
+    { "slug": "entityculling", "title": "Entity Culling", "category": "Графика и производительность" },
+    { "slug": "immediatelyfast", "title": "ImmediatelyFast", "category": "Графика и производительность" },
+    { "slug": "entity-model-features", "title": "Entity Model Features (для Fresh Animations)", "category": "Анимации" },
+    { "slug": "entity-texture-features", "title": "Entity Texture Features (для Fresh Animations)", "category": "Анимации" },
+    { "slug": "jei", "title": "Just Enough Items", "category": "Интерфейс" },
+    { "slug": "clientsort", "title": "Client Sort", "category": "Интерфейс" },
+    { "slug": "minecraft-cursor", "title": "Cursors Extended", "category": "Интерфейс" },
+    { "slug": "zoomify", "title": "Zoomify", "category": "Интерфейс", "alternatives": ["ok-zoomer"] },
+
+    { "slug": "ars-nouveau", "title": "Ars Nouveau", "category": "Магия" },
+    { "slug": "irons-spells-n-spellbooks", "title": "Iron's Spells 'n Spellbooks", "category": "Магия" },
+
+    { "slug": "better-combat", "title": "Better Combat", "category": "Бой и анимации" },
+    { "slug": "epic-fight", "title": "Epic Fight", "category": "Бой и анимации", "disabled": true, "reason": "Дублирует Better Combat (оба переделывают бой); совместная работа не подтверждена, оставлен один — Better Combat (легче, работает с Simply Swords). Можно поставить вручную из каталога модов." },
+    { "slug": "emotecraft", "title": "Emotecraft", "category": "Бой и анимации" },
+    { "slug": "punchymoves", "title": "Punchy! Moves", "category": "Бой и анимации" },
+    { "slug": "simply-swords", "title": "Simply Swords", "category": "Рыцари и оружие" },
+    { "slug": "epic-knights-shields-armor-and-weapons", "title": "Epic Knights: Shields, Armor and Weapons", "category": "Рыцари и оружие" },
+    { "slug": "epic-samurais", "title": "Epic Samurai's (Samurai Dynasty)", "category": "Самураи" },
+
+    { "slug": "origins", "title": "Origins (выбор расы)", "category": "Расы и классы", "alternatives": ["origins-forge"] },
+    { "slug": "origins-classes-forge", "title": "Origins: Classes", "category": "Расы и классы" },
+    { "slug": "paxi", "title": "Paxi (загрузка датапаков для всех миров)", "category": "Расы и классы" },
+    { "slug": "vampirism", "title": "Vampirism", "category": "Расы и классы" },
+    { "slug": "werewolves", "title": "Werewolves", "category": "Расы и классы" },
+
+    { "slug": "alexs-mobs", "title": "Alex's Mobs", "category": "Существа", "alternatives": ["alexs-mobs-continued"] },
+    { "slug": "iceandfire-ce", "title": "Ice and Fire: Community Edition (драконы)", "category": "Драконы и существа", "alternatives": ["ice-and-fire-dragons"] },
+    { "slug": "l_enders-cataclysm", "title": "L_Ender's Cataclysm", "category": "Боссы" },
+    { "slug": "bosses-of-mass-destruction-forge", "title": "Bosses of Mass Destruction (Forge)", "category": "Боссы" },
+
+    { "slug": "terralith", "title": "Terralith", "category": "Мир и структуры" },
+    { "slug": "yungs-better-dungeons", "title": "YUNG's Better Dungeons", "category": "Мир и структуры" },
+    { "slug": "when-dungeons-arise", "title": "When Dungeons Arise", "category": "Мир и структуры" },
+    { "slug": "repurposed-structures-forge", "title": "Repurposed Structures", "category": "Мир и структуры" },
+    { "slug": "towns-and-towers", "title": "Towns and Towers", "category": "Мир и структуры" },
+
+    { "slug": "jadens-nether-expansion", "title": "Jaden's Nether Expansion", "category": "Нижний мир" },
+    { "slug": "yungs-better-nether-fortresses", "title": "YUNG's Better Nether Fortresses", "category": "Нижний мир" },
+
+    { "slug": "villager-recruits", "title": "Villager Recruits (армия, стража, лучники, команды)", "category": "Королевства и армии" },
+    { "slug": "guard-villagers", "title": "Guard Villagers", "category": "Королевства и армии" },
+    { "slug": "minecraft-comes-alive-reborn", "title": "MCA Reborn", "category": "Города и жители", "disabled": true, "reason": "Переделывает жителей; совместимость с Villager Recruits / Guard Villagers не подтверждена. Включайте вручную после проверки." },
+
+    { "slug": "farmers-delight", "title": "Farmer's Delight", "category": "Кухня и фермерство" },
+    { "slug": "delightful", "title": "Delightful", "category": "Кухня и фермерство" },
+
+    { "slug": "ftb-quests-forge", "title": "FTB Quests", "category": "Квесты", "alternatives": ["ftb-quests"] },
+
+    { "slug": "treechop", "title": "TreeChop", "category": "Выживание" },
+    { "slug": "serene-seasons", "title": "Serene Seasons", "category": "Погода и сезоны" },
+    { "slug": "tough-as-nails", "title": "Tough As Nails (жажда и температура)", "category": "Выживание" },
+    { "slug": "thirst-was-taken", "title": "Thirst Was Taken", "category": "Выживание", "disabled": true, "reason": "Дубль жажды из Tough As Nails — оставлен один мод." },
+    { "slug": "project-atmosphere", "title": "Project Atmosphere (реалистичная погода)", "category": "Погода и сезоны", "disabled": true, "reason": "Экспериментальный, перекрывается с Serene Seasons; поддержка 1.20.1 не подтверждена." },
+
+    { "slug": "particular-reforged", "title": "Particular Reforged", "category": "Визуальные эффекты" },
+    { "slug": "subtle-effects", "title": "Subtle Effects", "category": "Визуальные эффекты" },
+    { "slug": "particle-interactions-forgified", "title": "Particle Interactions (Forgified)", "category": "Визуальные эффекты" }
+  ],
+  "datapacks": [
+    { "slug": "origins-goblin", "title": "Origins: Goblin (раса гоблин)" },
+    { "slug": "epic-structures-villages", "title": "Epic Structures: Villages" }
+  ],
+  "shaders": [
+    { "slug": "complementary-reimagined", "title": "Complementary Shaders — Reimagined" },
+    { "slug": "bsl-shaders", "title": "BSL Shaders" }
+  ],
+  "removedShaders": [
+    { "slug": "complementary-unbound", "reason": "Тот же движок, что Reimagined (один из двух оставлен)." },
+    { "slug": "photon-shader", "reason": "Требует новых возможностей загрузчика шейдеров; стабильность на Oculus 1.20.1 не подтверждена." }
+  ],
+  "resourcepacks": [
+    { "slug": "faithful-32x", "title": "Faithful 32x" },
+    { "slug": "fresh-animations", "title": "Fresh Animations" },
+    { "slug": "fa-player-extension", "title": "Fresh Animations: Player Extension" },
+    { "slug": "just-expressions", "title": "Just Expressions" },
+    { "slug": "fluid-foolish", "title": "Fluid & Foolish" },
+    { "slug": "recolourful-containers-gui", "title": "Recolourful Containers GUI + HUD" },
+    { "slug": "pXh2xDi4", "title": "Low Fire AND Low Shield" },
+    { "slug": "simple-grass-flowers", "title": "Simple Grass Flowers" },
+    { "slug": "better-clouds-texture", "title": "Better Clouds Texture" },
+    { "slug": "vibrant-fog", "title": "Vibrant Fog" },
+    { "slug": "cubic-sun-moon", "title": "Cubic Sun & Moon" }
+  ]
+}

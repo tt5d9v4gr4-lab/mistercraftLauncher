@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:shield"
+    },
+    "title": {
+      "text": "Щит деревни"
+    },
+    "description": {
+      "text": "Защити поселение от рейда и стань Героем деревни."
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "h": {
+      "trigger": "minecraft:hero_of_the_village"
+    }
+  },
+  "rewards": {
+    "experience": 150,
+    "loot": [
+      "mf_story:reward_medium"
+    ]
+  },
+  "parent": "mf_story:wanderer_2"
+}

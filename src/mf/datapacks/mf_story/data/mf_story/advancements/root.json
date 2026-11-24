@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:iron_sword"
+    },
+    "title": {
+      "text": "MisterCraft: Medieval Fantasy"
+    },
+    "description": {
+      "text": "Твоя история начинается. Следуй цепочкам заданий — или иди своим путём."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+  },
+  "criteria": {
+    "start": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "rewards": {
+    "experience": 10,
+    "loot": [
+      "mf_story:reward_easy"
+    ]
+  }
+}

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cdn.modrinth.com; script-src 'self'">
+  <title>MisterCraft Launcher</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="bg"></canvas>
+  <div class="bg-shade"></div>
+
+  <header id="titlebar">
+    <div class="brand">
+      <img src="assets/icon.png" alt="">
+      <span class="brand-name">MISTERCRAFT</span><em>LAUNCHER</em>
+    </div>
+    <div class="winbtns">
+      <button id="btn-min" title="Свернуть"><i class="ic-min"></i></button>
+      <button id="btn-max" title="Развернуть"><i class="ic-max"></i></button>
+      <button id="btn-close" class="close" title="Закрыть"><i class="ic-x"></i></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-title">MISTER<span>CRAFT</span></div>
+      <div class="hero-sub">Лаунчер Minecraft Java Edition</div>
+      <div class="selected-card glass">
+        <div class="sc-label">ВЫБРАННАЯ ВЕРСИЯ</div>
+        <div class="sc-main"><span id="hero-ver">—</span><span id="hero-loader" class="chip-sm"></span></div>
+        <div id="hero-status" class="sc-status"></div>
+      </div>
+      <button id="btn-mf" class="mf-card" type="button">
+        <svg class="mf-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3 6 11v12c0 11 7 18 18 22 11-4 18-11 18-22V11z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 12v26M16 20h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <span class="mf-card-text">
+          <span class="mf-card-title">MEDIEVAL FANTASY</span>
+          <span class="mf-card-sub">Погрузись в огромную фэнтезийную вселенную Minecraft с магией, существами, боссами и средневековыми королевствами.</span>
+        </span>
+      </button>
+    </section>
+
+    <aside class="panel glass versions">
+      <div class="panel-head">Версия игры</div>
+      <div class="tabs" id="tabs">
+        <button data-tab="release" class="active">Релизы</button>
+        <button data-tab="snapshot">Снапшоты</button>
+        <button data-tab="old">Старые</button>
+      </div>
+      <input id="search" class="input" type="text" placeholder="Поиск версии…" autocomplete="off" spellcheck="false">
+      <div id="vlist" class="vlist"></div>
+      <div class="panel-head small">Модлоадер</div>
+      <div class="chips" id="loader-chips">
+        <button data-loader="vanilla" class="active">Vanilla</button>
+        <button data-loader="fabric">Fabric</button>
+        <button data-loader="forge">Forge</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="bar glass">
+    <button id="btn-account" class="acc-btn">
+      <canvas id="acc-avatar" width="32" height="32"></canvas>
+      <span class="acc-text"><b id="acc-name">Нет аккаунта</b><small id="acc-type">Нажмите, чтобы войти</small></span>
+    </button>
+
+    <div class="status">
+      <div class="status-row"><span id="status-text">Готов к запуску</span><span id="status-pct"></span></div>
+      <div class="bar-track"><div id="bar-fill" class="bar-fill"></div></div>
+    </div>
+
+    <button id="btn-mods" class="btn ghost">Моды</button>
+    <button id="btn-skins" class="btn ghost">Скины</button>
+    <button id="btn-installed" class="btn ghost">Установленные</button>
+    <button id="btn-settings" class="btn ghost">Настройки</button>
+    <button id="btn-stop" class="btn danger hidden">Остановить</button>
+    <button id="btn-play" class="btn play"><span id="play-label">ИГРАТЬ</span></button>
+  </footer>
+
+  <!-- Настройки -->
+  <div class="modal" id="m-settings"><div class="dialog glass">
+    <div class="dlg-head"><h2>Настройки</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body">
+      <label class="field">
+        <span>Оперативная память: <b id="ram-label"></b></span>
+        <input id="ram-range" type="range" min="1024" max="8192" step="512">
+      </label>
+      <label class="field">
+        <span>Java</span>
+        <div class="row">
+          <select id="java-select" class="input"></select>
+          <button id="java-browse" class="btn ghost small">Обзор…</button>
+        </div>
+        <small class="hint">«Авто» — лаунчер сам подберёт или скачает нужную Java для выбранной версии.</small>
+      </label>
+      <label class="check"><input type="checkbox" id="chk-hide"><span>Сворачивать лаунчер при запуске игры</span></label>
+      <div class="row end">
+        <button id="btn-open-mods" class="btn ghost">Открыть папку модов</button>
+        <button id="btn-open-folder" class="btn ghost">Открыть папку Minecraft</button>
+      </div>
+      <small class="hint" id="root-path"></small>
+    </div>
+  </div></div>
+
+  <!-- Аккаунт -->
+  <div class="modal" id="m-account"><div class="dialog glass">
+    <div class="dlg-head"><h2>Аккаунт</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body">
+      <div id="acc-list" class="acc-list"></div>
+
+      <div class="section-title">Вход через Microsoft</div>
+      <div id="ms-box" class="ms-box hidden">
+        <div class="ms-step">Откройте страницу Microsoft и введите код:</div>
+        <div id="ms-code" class="ms-code">—</div>
+        <div class="row">
+          <button id="ms-open" class="btn ghost small">Открыть страницу</button>
+          <button id="ms-copy" class="btn ghost small">Копировать код</button>
+          <button id="ms-cancel" class="btn danger small">Отмена</button>
+        </div>
+      </div>
+      <div class="row" id="ms-start-row">
+        <button id="btn-ms" class="btn play small">Войти через Microsoft</button>
+      </div>
+      <label class="field">
+        <span>Azure Client ID</span>
+        <input id="ms-client-id" class="input" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" spellcheck="false">
+        <small class="hint">Нужен для входа Microsoft. Создаётся бесплатно в Azure (см. README).</small>
+      </label>
+
+      <div class="section-title">Офлайн-профиль</div>
+      <div class="row">
+        <input id="off-name" class="input" type="text" maxlength="16" placeholder="Ник (3–16 символов)" spellcheck="false">
+        <button id="btn-off-add" class="btn ghost small">Добавить</button>
+      </div>
+      <small class="hint">Для игры без лицензии доступны только одиночная игра и серверы без проверки лицензии.</small>
+    </div>
+  </div></div>
+
+  <!-- Установленные версии -->
+  <div class="modal" id="m-installed"><div class="dialog glass wide">
+    <div class="dlg-head"><h2>Установленные версии</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body">
+      <div id="inst-list" class="inst-list"></div>
+      <div class="row end"><button id="btn-open-folder2" class="btn ghost">Открыть папку Minecraft</button></div>
+    </div>
+  </div></div>
+
+  <!-- Medieval Fantasy: отдельное направление -->
+  <div id="mf" class="mf hidden">
+    <canvas id="mf-bg"></canvas>
+    <div class="mf-shade"></div>
+    <div class="mf-wrap">
+      <div class="mf-left">
+        <div class="mf-tag">MISTERCRAFT</div>
+        <h1 class="mf-h1">MEDIEVAL<span>FANTASY</span></h1>
+        <div class="mf-sub">Minecraft 1.20.1 · Forge · отдельная сборка</div>
+        <nav class="mf-menu">
+          <button id="mf-play" class="mf-btn primary" type="button"><b id="mf-play-label">Играть</b><small id="mf-play-sub"></small></button>
+          <button id="mf-stop" class="mf-btn hidden" type="button">Остановить игру</button>
+          <button id="mf-continue" class="mf-btn" type="button">Продолжить приключение</button>
+          <button id="mf-worlds" class="mf-btn" type="button">Мои миры</button>
+          <button id="mf-mods" class="mf-btn" type="button">Управление модами</button>
+          <button id="mf-gfx" class="mf-btn" type="button">Настройки графики</button>
+          <button id="mf-shaders" class="mf-btn" type="button">Выбор шейдеров</button>
+          <button id="mf-update" class="mf-btn" type="button">Обновление сборки</button>
+          <button id="mf-back" class="mf-btn back" type="button">← Вернуться в MisterCraft</button>
+        </nav>
+      </div>
+      <aside class="mf-right glass">
+        <div class="panel-head">Сборка</div>
+        <div id="mf-info" class="mf-info"></div>
+        <div id="mf-prog" class="mf-prog hidden">
+          <div class="status-row"><span id="mf-prog-text">…</span><button id="mf-cancel" class="btn danger small" type="button">Отменить</button></div>
+          <div class="bar-track"><div id="mf-prog-fill" class="bar-fill"></div></div>
+        </div>
+        <button id="mf-report-btn" class="btn ghost small hidden" type="button">Отчёт об установке</button>
+        <button id="mf-folder" class="btn ghost small" type="button">Открыть папку сборки</button>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Medieval Fantasy: окна -->
+  <div class="modal" id="m-mf-worlds"><div class="dialog glass">
+    <div class="dlg-head"><h2>Мои миры</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body">
+      <div id="mf-world-list" class="mods-list"></div>
+      <div class="row end"><button id="mf-open-saves" class="btn ghost small" type="button">Открыть папку миров</button></div>
+    </div>
+  </div></div>
+
+  <div class="modal" id="m-mf-gfx"><div class="dialog glass">
+    <div class="dlg-head"><h2>Настройки графики</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body">
+      <div class="section-title" style="border:0;padding:0;margin:0">Профиль</div>
+      <div class="tabs" id="mf-presets"></div>
+      <small class="hint" id="mf-preset-hint"></small>
+      <label class="field"><span>Оперативная память: <b id="mf-ram-label"></b></span><input id="mf-ram" type="range" min="2048" max="16384" step="512"></label>
+      <label class="field"><span>Дальность прорисовки: <b id="mf-rd-label"></b></span><input id="mf-rd" type="range" min="6" max="48" step="1"></label>
+      <label class="field"><span>Дальность симуляции: <b id="mf-sd-label"></b></span><input id="mf-sd" type="range" min="5" max="32" step="1"></label>
+      <small class="hint">Применяется при запуске игры. Шейдеры включаются в профилях «Сбалансированный» и «Ультра» (выбор шейдера — в разделе «Выбор шейдеров»).</small>
+    </div>
+  </div></div>
+
+  <div class="modal" id="m-mf-shaders"><div class="dialog glass wide">
+    <div class="dlg-head"><h2>Шейдеры</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body">
+      <div class="section-title" style="border:0;padding:0;margin:0">Установленные</div>
+      <div id="mf-shader-list" class="mods-list"></div>
+      <div class="section-title">Рекомендуемые (с Modrinth, для 1.20.1)</div>
+      <div id="mf-shader-rec" class="mods-list"></div>
+      <div class="row end"><button id="mf-open-shaders" class="btn ghost small" type="button">Открыть папку шейдеров</button></div>
+    </div>
+  </div></div>
+
+  <div class="modal" id="m-mf-update"><div class="dialog glass wide">
+    <div class="dlg-head"><h2>Обновление сборки</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body">
+      <div class="row">
+        <button id="mf-check" class="btn ghost small" type="button">Проверить обновления</button>
+        <button id="mf-update-all" class="btn play small hidden" type="button">Обновить всё</button>
+        <button id="mf-reinstall" class="btn ghost small" type="button">Доустановить недостающее</button>
+      </div>
+      <small class="hint" id="mf-update-hint">Обновляются моды сборки. Версия игры (1.20.1) и Forge не меняются.</small>
+      <div id="mf-update-list" class="mods-list"></div>
+    </div>
+  </div></div>
+
+  <div class="modal" id="m-mf-report"><div class="dialog glass wide">
+    <div class="dlg-head"><h2>Отчёт об установке</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body"><div id="mf-report-body" class="mods-list"></div></div>
+  </div></div>
+
+  <!-- Моды -->
+  <div class="modal" id="m-mods"><div class="dialog glass wider tall">
+    <div class="dlg-head"><h2>Моды</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body mods-body">
+      <div class="mods-top">
+        <span id="mods-profile" class="badge"></span>
+        <div class="tabs" id="mods-tabs">
+          <button data-mtab="catalog" class="active">Каталог</button>
+          <button data-mtab="installed">Установленные</button>
+        </div>
+        <button id="mods-folder" class="btn ghost small">Папка модов</button>
+      </div>
+      <small class="hint" id="mods-warn"></small>
+
+      <div id="mods-catalog">
+        <div class="row mods-filters">
+          <input id="mods-q" class="input" type="text" placeholder="Поиск модов по названию…" autocomplete="off" spellcheck="false">
+          <select id="mods-sort" class="input"></select>
+          <select id="mods-cat" class="input"></select>
+        </div>
+        <label class="check"><input type="checkbox" id="mods-compat" checked><span>Только совместимые с выбранной версией</span></label>
+        <div id="mods-list" class="mods-list"></div>
+        <div class="row end"><button id="mods-more" class="btn ghost small hidden">Показать ещё</button></div>
+      </div>
+
+      <div id="mods-detail" class="hidden"></div>
+
+      <div id="mods-installed" class="hidden">
+        <div class="row"><button id="mods-check" class="btn ghost small">Проверить обновления</button></div>
+        <div id="mods-inst-list" class="mods-list"></div>
+      </div>
+
+      <div id="mods-prog" class="mods-prog hidden">
+        <div class="status-row"><span id="mods-prog-text">Загрузка…</span><button id="mods-cancel" class="btn danger small">Отменить</button></div>
+        <div class="bar-track"><div id="mods-prog-fill" class="bar-fill"></div></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- Скины -->
+  <div class="modal" id="m-skins"><div class="dialog glass wide">
+    <div class="dlg-head"><h2>Скины</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body">
+      <div class="row">
+        <button id="skin-import" class="btn play small">Загрузить PNG</button>
+        <button id="skin-new" class="btn ghost small">Создать свой скин</button>
+      </div>
+      <small class="hint" id="skin-hint"></small>
+      <div id="skin-grid" class="skin-grid"></div>
+    </div>
+  </div></div>
+
+  <!-- Редактор скина -->
+  <div class="modal" id="m-editor"><div class="dialog glass wider">
+    <div class="dlg-head"><h2>Редактор скина</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body ed-body">
+      <div class="ed-left"><canvas id="ed-canvas" width="64" height="64"></canvas></div>
+      <div class="ed-right">
+        <div class="tabs" id="ed-tools">
+          <button data-tool="pencil" class="active">Кисть</button>
+          <button data-tool="eraser">Ластик</button>
+          <button data-tool="fill">Заливка</button>
+          <button data-tool="pick">Пипетка</button>
+        </div>
+        <div class="row"><input type="color" id="ed-color" value="#ffcc00"><div id="ed-swatches" class="swatches"></div></div>
+        <div class="row">
+          <canvas id="ed-preview" width="80" height="160"></canvas>
+          <div class="ed-fields">
+            <input id="ed-name" class="input" type="text" maxlength="32" placeholder="Название скина" spellcheck="false">
+            <select id="ed-variant" class="input">
+              <option value="classic">Обычный (Steve)</option>
+              <option value="slim">Тонкий (Alex)</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <button id="ed-undo" class="btn ghost small">Отменить</button>
+          <button id="ed-template" class="btn ghost small">Шаблон</button>
+          <button id="ed-clear" class="btn ghost small">Очистить</button>
+        </div>
+        <button id="ed-save" class="btn play">Сохранить скин</button>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- Журнал -->
+  <div class="modal" id="m-log"><div class="dialog glass wide">
+    <div class="dlg-head"><h2>Журнал игры</h2><button class="x" data-close>✕</button></div>
+    <div class="dlg-body">
+      <pre id="log-pre" class="log"></pre>
+    </div>
+  </div></div>
+
+  <div id="toasts"></div>
+
+  <script src="background.js"></script>
+  <script src="mf-bg.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:chorus_flower"
+    },
+    "title": {
+      "text": "Цветок Пустоты"
+    },
+    "description": {
+      "text": "Победи Цветок Пустоты."
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "k": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "bosses_of_mass_destruction:void_blossom"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 500,
+    "loot": [
+      "mf_story:reward_boss"
+    ]
+  },
+  "parent": "mf_story:bomd_gauntlet",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "bosses_of_mass_destruction"
+    }
+  ]
+}

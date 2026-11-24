@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:obsidian"
+    },
+    "title": {
+      "text": "Врата"
+    },
+    "description": {
+      "text": "Войди в Нижний мир."
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "n": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "minecraft:the_nether"
+      }
+    }
+  },
+  "rewards": {
+    "experience": 80,
+    "loot": [
+      "mf_story:reward_medium"
+    ]
+  },
+  "parent": "mf_story:root"
+}
